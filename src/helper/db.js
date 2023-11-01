@@ -1,4 +1,3 @@
-import { User } from "@/model/user";
 import mongoose from "mongoose"
 
 export const connectDb = async() => {
@@ -8,15 +7,8 @@ export const connectDb = async() => {
         });
         console.log('Database connected')
 
-        const user = new User({
-            name:'shahzain',
-            email:'sshnaqvi',
-            password:'hello',
-            about:'developer'
-        })
-
     } catch (error) {
         console.log('failed to connect with db')
     }
-
 }
+connectDb()

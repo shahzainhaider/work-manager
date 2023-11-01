@@ -1,27 +1,39 @@
-import { connectDb } from "@/helper/db";
+import { User } from "@/model/user";
 import { NextResponse } from "next/server";
 
 
-export function GET(request){
-    const users = [
-        {
-            name:'shahzain',
-            age:20
-        },
-        {
-            name:'bilal',
-            age:20
-        },
-        {
-            name:'kumail',
-            age:20
-        }
-    ];
-
-    return NextResponse.json({users},{status:220,statusText:'hello'})
+export async function GET(request){
+    let users = [];
+    try {
+        users = await User.find().select('-password')
+        return NextResponse.json(users)
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({
+            message:'internal server error',
+            success:false
+        })
+    }
 }
+export async function POST(request){
 
-export function POST (request){
-    const {name,email,password,about,profileURl} = request.json()
+    const {name,email,password,about,profileURL} = await request.json()
+    const user = new User({
+        name,
+        email,
+        password,
+        about,
+        profileURL
+    })
 
+    try {
+        const createdUser = await user.save()
+        const response = NextResponse.json(user)
+        return response
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({
+            message:'internal server error'
+        },{status:500})
+    }
 }
