@@ -11,4 +11,3 @@ export const connectDb = async() => {
         console.log('failed to connect with db')
     }
 }
-connectDb()

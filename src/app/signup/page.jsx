@@ -1,11 +1,12 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import signup from '../../assets/signup.svg'
 import Image from 'next/image'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingBar from 'react-top-loading-bar';
 import { ToastContainer, toast } from 'react-toastify'
+import UserContext from '@/context/userContext'
 
 
 const page = () => {
@@ -18,19 +19,18 @@ const page = () => {
         profileURL: 'https://w7.pngwing.com/pngs/981/645/png-transparent-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette-symbol-thumbnail.png'
     })
 
+    //api call
     const addUser = async (user) => {
         const httpAxios = axios.create({ baseURL: process.env.BASE_URL })
         const response = await httpAxios.post('/api/users', user)
-        setProgress(40)
         const data = await response.data
-        setProgress(100)
         return data
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await addUser(data);
+             await addUser(data);
             toast.success('User Added Successfully!!')
             setData({
             ...data,
@@ -39,9 +39,7 @@ const page = () => {
             password: '',
             about: ''
             })
-            
         } catch (error) {
-            setProgress(0)
             console.log(error);
             toast.error('Failed to Add User')
         }

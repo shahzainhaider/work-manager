@@ -18,7 +18,7 @@ const workSchema = new Schema({
     status:{
         type:String,
         enum:['pending','compeleted'],
-        // default:'pending'
+        default:'pending'
     },
     userId:{
         type:mongoose.ObjectId,

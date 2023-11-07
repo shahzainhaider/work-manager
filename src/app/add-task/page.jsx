@@ -4,8 +4,6 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import note from '../../assets/notes.svg'
 import React, { useState } from 'react'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import LoadingBar from 'react-top-loading-bar';
 
 const page = () => {
@@ -14,16 +12,16 @@ const page = () => {
     title: '',
     content: '',
     status: 'none',
-    userId: '653a79b1290dcc2df58c690a'
   });
   
   async function addTask(task){  
     try {
       const httpAxios = axios.create({baseURL:process.env.BASE_URL})
+      // setProgress(30)
       const result =await httpAxios.post('/api/works',task)
-      setProgress(40)
+      // setProgress(60)
       const data = await result.data
-      setProgress(100)
+      // setProgress(100)
         
         return data
     } catch (error) {
@@ -55,7 +53,6 @@ const page = () => {
 
   return (
     <>
-    <LoadingBar transitionTime='500' progress={progress} color='red' loaderSpeed='1000' height='3px' />
       <div className="grid grid-cols-12">
 
         <div className="col-span-10 sm:col-span-6 md:col-span-4 col-start-2 sm:col-start-4 md:col-start-5 p-4">
@@ -99,7 +96,7 @@ const page = () => {
           </form>
         </div>
       </div>
-          <ToastContainer/>
+          
     </>
   )
 }

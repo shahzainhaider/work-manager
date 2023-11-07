@@ -1,5 +1,6 @@
 import { User } from "@/model/user";
 import { NextResponse } from "next/server";
+import bcrypt from 'bcrypt'
 
 
 export async function GET(request){
@@ -27,7 +28,10 @@ export async function POST(request){
     })
 
     try {
-        const createdUser = await user.save()
+        const salt =  await bcrypt.genSalt(10)
+        const hashPassword = await bcrypt.hash(password,salt)
+        user.password = hashPassword
+        await user.save()
         const response = NextResponse.json(user)
         return response
     } catch (error) {

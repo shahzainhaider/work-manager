@@ -1,3 +1,4 @@
+import { connectDb } from "@/helper/db"
 import { User } from "@/model/user"
 import { NextResponse } from "next/server"
 
@@ -31,6 +32,7 @@ export async function GET(request, { params }) {
 
 //Update user
 export async function PUT(request, { params }) {
+    connectDb()
     const { userId } = params
     const { name, password, about, profileURL } = await request.json()
     try {
